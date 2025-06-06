@@ -7,7 +7,7 @@ set( CMAKE_CXX_STANDARD 14 )
 set( CMAKE_AUTOMOC ON )
 
 option( QtBoilerplate_SHARED_BUILD "Build as shared library" OFF )
-option( boilerplate_BUILD_TEST "Включает юнит тесты" OFF )
+option( QtBoilerplate_BUILD_TEST "Включает юнит тесты" OFF )
 
 find_package( Qt5 REQUIRED COMPONENTS Core )
 
@@ -27,6 +27,6 @@ target_include_directories( ${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/s
 target_link_libraries( ${TARGET_NAME} PUBLIC Qt5::Core )
 set_target_properties( ${TARGET_NAME} PROPERTIES PUBLIC_HEADER "${HEADER_FILES}" )
 
-if ( boilerplate_BUILD_TEST )
+if ( QtBoilerplate_BUILD_TEST )
 	include( testing.cmake )
-endif ( boilerplate_BUILD_TEST )
+endif ( QtBoilerplate_BUILD_TEST )
