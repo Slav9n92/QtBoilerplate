@@ -12,6 +12,6 @@
 int main( int argc, char* argv[] )
 {
     int status = 0;
-
+    status |= QTest::qExec( new qt::boilerplate::testing::Tst_Expected, argc, argv );
     return status;
 }
