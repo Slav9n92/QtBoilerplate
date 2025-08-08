@@ -31,7 +31,13 @@ public:
 
 public:
     explicit QIODeviceHandler( QPointer< QIODevice > device ) noexcept
-            : device( std::move( device ) )
+            : QIODeviceHandler( std::move( device ), QUuid::createUuid() )
+    {
+    }
+
+    QIODeviceHandler( QPointer< QIODevice > device, QUuid id ) noexcept
+            : id( id )
+            , device( std::move( device ) )
             , packageSize( 0 )
     {
     }
@@ -54,11 +60,11 @@ public:
     {
         if( !device ) { return boilerplate::make_unexpected_type( Error::InvalidDevice ); }
 
-        const auto headerSize = sizeof( HeaderTypeT );
+        const auto headerSize = getHeaderSize();
         std::list< QByteArray > incoming;
         do
         {
-            if( 0 < device->bytesAvailable() ){ buffer.append( device->readAll() ); }
+            if( 0 < device->bytesAvailable() ) { buffer.append( device->readAll() ); }
             if( 0 == packageSize )
             {
                 if( headerSize <= buffer.size() )
@@ -81,12 +87,23 @@ public:
     }
 
 public:
+    QUuid getId() const noexcept
+    {
+        return id;
+    }
+
     QPointer< QIODevice > getDevice() const noexcept
     {
         return device;
     }
 
+    size_t getHeaderSize() const noexcept
+    {
+        return sizeof( HeaderTypeT );
+    }
+
 private:
+    QUuid id;
     QPointer< QIODevice > device;
     HeaderTypeT packageSize;
     QByteArray buffer;
