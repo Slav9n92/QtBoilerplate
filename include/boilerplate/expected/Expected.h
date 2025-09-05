@@ -94,6 +94,12 @@ public:
         return storage.getError();
     }
 
+public:
+    ValueT release() noexcept
+    {
+        return storage.release();
+    }
+
 private:
     using StorageType = typename std::conditional<
             std::is_trivially_constructible< ValueT >::value && std::is_trivially_destructible< ValueT >::value &&

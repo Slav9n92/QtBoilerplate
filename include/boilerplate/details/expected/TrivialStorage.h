@@ -94,6 +94,12 @@ public:
         return storage.error;
     }
 
+public:
+    ValueT release() noexcept
+    {
+        return std::move( storage.value );
+    }
+
 private:
     void swap( const TrivialStorage& other ) noexcept
     {
