@@ -10,6 +10,7 @@
 
 #include <QtCore>
 #include <QIODevice>
+#include <QUuid>
 #include <boilerplate/expected/Expected.h>
 #include <QString>
 #include <type_traits>
